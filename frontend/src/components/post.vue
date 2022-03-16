@@ -314,11 +314,11 @@ export default {
         });
     },
     deleteComment(id, authorId, currentPostId) {
-      if (this.userId == authorId) {
+      if (this.userId == authorId || this.id == 103 ) {
         axios
           .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
             headers: { Authorization: `Bearer ${this.token}` },
-            data: { userId: self.userId },
+            data: { userId: this.userId },
           })
           .then((response) => {
             console.log(response);
