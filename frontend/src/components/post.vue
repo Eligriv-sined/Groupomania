@@ -14,6 +14,7 @@
                 class="form-control mb-2"
                 id="text"
                 placeholder="Comment ça va aujourd'hui ?"
+                aria-label="zone de texte"
               />
             </div>
             <div class="justify-content-between">
@@ -23,9 +24,10 @@
                 id="image"
                 name="image"
                 accept="image/png, image/jpeg"
+                aria-label="choisir un fichier img"
                
               />
-              <button @click="addPost()" class="publier btn btn-primary">
+              <button @click="addPost()" class="publier btn btn-primary" aria-label="boutons envoie">
                 envoyé
               </button>
             </div>
@@ -189,6 +191,7 @@
               id="comment"
               aria-describedby="comment"
               placeholder="Ajoutez un commentaire ..."
+              aria-label="ajouter un commentaire"
             />
           </div>
         </div>
@@ -472,6 +475,13 @@ export default {
     background-color: black;
     box-shadow:   10px 10px  grey; ;
     
+}
+
+.border{
+  border-radius: 15px;
+  border: 1px solid grey!important;
+  box-shadow: 2px 1px 2px 1px black ;
+
 }
 
 .text-noPost {

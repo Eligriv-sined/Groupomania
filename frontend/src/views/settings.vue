@@ -396,7 +396,7 @@ h2.active {
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  background-color: #56baed;
+  background-color: black;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -511,7 +511,7 @@ input[type="text"]:placeholder {
   }
 }
 
-/* Simple CSS3 Fade-in Animation */
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -562,7 +562,7 @@ input[type="text"]:placeholder {
   animation-delay: 0.4s;
 }
 
-/* Simple CSS3 Fade-in Animation */
+
 .underlineHover:after {
   display: block;
   left: 0;
@@ -582,16 +582,7 @@ input[type="text"]:placeholder {
   width: 100%;
 }
 
-.underlineHoverH2:after {
-  display: block;
-  left: 0;
-  bottom: -10px;
-  width: 0;
-  height: 2px;
-  background-color: #2c658e;
-  content: "";
-  transition: width 0.2s;
-}
+
 
 .underlineHoverH2:hover {
   color: #0d0d0d;

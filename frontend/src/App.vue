@@ -27,14 +27,7 @@
         <ul class="nav justify-content-center">
           <li class="nav-item" v-if="user">
             <a class="nav-link">
-              <router-link :to="{ name: 'user', params: { userId: user.id } }">
-                <img
-                  v-bind:src="user.pp"
-                  alt="pp"
-                  class="userPageLink"
-                  @click="refresh"
-                />
-              </router-link>
+              
             </a>
           </li>
           <li class="nav-item">

@@ -159,7 +159,7 @@ h2 {
 }
 
 #formContent {
-  
+  border-radius: 15px;
   background: #fff;
   padding: 30px;
   width: 90%;
@@ -180,7 +180,6 @@ h2.inactive {
 
 h2.active {
   color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
 }
 
 /* FORM TYPOGRAPHY*/
@@ -188,7 +187,7 @@ h2.active {
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  background-color: #56baed;
+  background-color: black;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -209,11 +208,6 @@ input[type="reset"] {
   transition: all 0.3s ease-in-out;
 }
 
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover {
-  background-color: #091f43;
-}
 
 input[type="button"]:active,
 input[type="submit"]:active,
@@ -247,10 +241,7 @@ input[type="text"] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type="text"]:focus {
-  background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
-}
+
 
 input[type="text"]:placeholder {
   color: #cccccc;
@@ -354,17 +345,7 @@ input[type="text"]:placeholder {
   animation-delay: 0.4s;
 }
 
-/* Simple CSS3 Fade-in Animation */
-.underlineHover:after {
-  display: block;
-  left: 0;
-  bottom: -10px;
-  width: 0;
-  height: 2px;
-  background-color: #56baed;
-  content: "";
-  transition: width 0.2s;
-}
+
 
 .underlineHover:hover {
   color: #0d0d0d;
