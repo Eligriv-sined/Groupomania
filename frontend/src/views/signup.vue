@@ -4,7 +4,7 @@
       <div id="formContent">
         <!-- Tabs Titles -->
         <h2 @click="switchToSignup" v-if="mode == 'signup'" class="active">
-         Inscription
+          Inscription
         </h2>
         <h2
           @click="switchToSignup"
@@ -105,7 +105,6 @@
         <div v-if="incorrect == true && mode == 'login'" class="error">
           <p>Email ou mot de passe incorrect</p>
         </div>
-        
       </div>
     </div>
   </div>
@@ -171,7 +170,6 @@ h2 {
   text-align: center;
 }
 
-
 /* TABS */
 
 h2.inactive {
@@ -208,7 +206,6 @@ input[type="reset"] {
   transition: all 0.3s ease-in-out;
 }
 
-
 input[type="button"]:active,
 input[type="submit"]:active,
 input[type="reset"]:active {
@@ -240,8 +237,6 @@ input[type="text"] {
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
-
-
 
 input[type="text"]:placeholder {
   color: #cccccc;
@@ -344,8 +339,6 @@ input[type="text"]:placeholder {
   -moz-animation-delay: 0.4s;
   animation-delay: 0.4s;
 }
-
-
 
 .underlineHover:hover {
   color: #0d0d0d;

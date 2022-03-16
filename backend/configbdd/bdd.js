@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const dotenv = require("dotenv").config();
 
 
-const pool = mysql.createPool({  //createConnection empeche le log ? 
+const pool = mysql.createPool({  
   host: process.env.DB_HOST,
   user: process.env.DB_USER, 
   password: process.env.DB_PASS,
@@ -27,7 +27,15 @@ function(err,results,fields){
 });
 
 
-
-
+pool.query(`SELECT * FROM post `,
+function(err,results,fields){
+  console.log(results);
+ 
+});
+pool.query(`SELECT * FROM comment `,
+function(err,results,fields){
+  console.log(results);
+ 
+});
 
 
