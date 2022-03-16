@@ -1,11 +1,7 @@
 <template>
   <header>
     <div class="navigation">
-      <nav
-        class="
-          navbar navbar-expand-sm navbar-light
-        "
-      >
+      <nav class="navbar navbar-expand-sm navbar-light">
         <a class="nav-link">
           <router-link to="/home">
             <img
@@ -14,7 +10,6 @@
               src="../image/icon-left-font-monochrome-black.png"
               alt="lien acceuil"
           /></router-link>
-          
         </a>
         <a class="nav-link">
           <router-link to="/home"
@@ -26,9 +21,7 @@
         </a>
         <ul class="nav justify-content-center">
           <li class="nav-item" v-if="user">
-            <a class="nav-link">
-              
-            </a>
+            <a class="nav-link"> </a>
           </li>
           <li class="nav-item">
             <a class="nav-link">
@@ -52,7 +45,6 @@
               /></router-link>
             </a>
           </li>
-       
         </ul>
       </nav>
     </div>
@@ -61,45 +53,13 @@
 </template>
 
 <style lang="scss">
-.loupe {
-  height: 35px;
-  margin-top: 7px;
-  margin-left: 10px;
-  &:hover {
-    transition: 0.3s;
-    transform: scale(1.1);
-  }
-}
-.inputsearch {
-  background-color: #f0f2f5;
-  border-radius: 20px;
-  text-align: center;
-}
-.nameSearch {
-  text-decoration: none;
-  color: #091f43;
-}
+
+
+
 a:link {
   text-decoration: none;
 }
-.imgSearch {
-  object-fit: cover;
-  height: 45px;
-  width: 45px;
-  margin: 10px;
-  border-radius: 100%;
-}
-.results {
-  position: absolute;
-}
-.result {
-  width: 221px;
-  border: 1px solid #dbdbdb;
-  background-color: white;
-  &:hover {
-    background-color: #90b3d6;
-  }
-}
+
 a:hover {
   transition: 0.3s;
   transform: scale(1.1);
@@ -133,9 +93,7 @@ a:hover {
 .navigation {
   padding-bottom: 30px;
 }
-.white {
-  background-color: #fff;
-}
+
 body {
   margin: 0;
   background-color: #fafafa;
@@ -165,14 +123,7 @@ body {
   .homeLinkLil {
     display: none;
   }
-  .loupe {
-    display: none;
-  }
-  .cross {
-    display: none;
-    height: 35px;
-    position: absolute;
-  }
+
 }
 @media only screen and (max-width: 1000px) {
   .homeLinkBig {
@@ -190,11 +141,7 @@ body {
   .inputsearch {
     display: none;
   }
-  .cross {
-    height: 35px;
-    margin-left: 20px;
-    display: none;
-  }
+
   .flex_input {
     display: flex;
   }

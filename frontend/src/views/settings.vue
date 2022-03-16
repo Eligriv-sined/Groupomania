@@ -388,7 +388,6 @@ h2.inactive {
 
 h2.active {
   color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
 }
 
 /* FORM TYPOGRAPHY*/
@@ -511,7 +510,6 @@ input[type="text"]:placeholder {
   }
 }
 
-
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -562,7 +560,6 @@ input[type="text"]:placeholder {
   animation-delay: 0.4s;
 }
 
-
 .underlineHover:after {
   display: block;
   left: 0;
@@ -581,8 +578,6 @@ input[type="text"]:placeholder {
 .underlineHover:hover:after {
   width: 100%;
 }
-
-
 
 .underlineHoverH2:hover {
   color: #0d0d0d;

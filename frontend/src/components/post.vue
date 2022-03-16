@@ -1,34 +1,15 @@
 <template>
   <router-view>
     <div class="d-flex justify-content-center newPost">
-      <div
-        class="
-          home
-        "
-      >
+      <div class="home">
         <div class="form">
           <form v-on:submit.prevent>
-            <div >
-              <input
-                type="text"
-                class="form-control mb-2"
-                id="text"
-                placeholder="Comment ça va aujourd'hui ?"
-                aria-label="zone de texte"
-              />
+            <div>
+              <input type="text" class="form-control mb-2"  id="text" placeholder="Comment ça va aujourd'hui ?" aria-label="zone de texte"/>
             </div>
             <div class="justify-content-between">
-              <input
-                @change="upload2"
-                type="file"
-                id="image"
-                name="image"
-                accept="image/png, image/jpeg"
-                aria-label="choisir un fichier img"
-               
-              />
-              <button @click="addPost()" class="publier btn btn-primary" aria-label="boutons envoie">
-                envoyé
+              <input @change="upload2" type="file" id="image" name="image" accept="image/png, image/jpeg" aria-label="choisir un fichier img" />
+              <button @click="addPost()" class="publier btn btn-primary" aria-label="boutons envoie">envoyé
               </button>
             </div>
           </form>
@@ -60,7 +41,6 @@
                 <router-link
                   :to="{ name: 'user', params: { userId: post.authorId } }"
                 >
-                  
                 </router-link>
 
                 <div class="d-flex flex-column flex-wrap ml-2">
@@ -72,7 +52,7 @@
                   class="deletePost"
                   src="../../image/times-solid.svg"
                   alt="supprimer"
-                  v-if="post.authorId == userId || userId == 103  " 
+                  v-if="post.authorId == userId || userId == 103"
                   @click="deletePost(post.postId, post.authorId)"
                 />
               </div>
@@ -171,13 +151,12 @@
                       comment.authorId,
                       post.postId
                     ),
-                    deleteCommentAdmin(
-                      comment.idComment,
-                      comment.authorId,
-                      post.postId)
-                  " 
-               
-                  
+                      deleteCommentAdmin(
+                        comment.idComment,
+                        comment.authorId,
+                        post.postId
+                      )
+                  "
                 />
               </div>
             </div>
@@ -301,13 +280,13 @@ export default {
           console.log(error);
         });
     },
-  deletePost(postId, authorId) {
+    deletePost(postId, authorId) {
       const self = this;
-      if (this.userId == authorId || ( this.id== 103)) {
+      if (this.userId == authorId || this.id == 103) {
         axios
           .delete(`http://localhost:3000/api/posts/${postId}`, {
             headers: { Authorization: `Bearer ${this.token}` },
-            data: { userId: self.userId},
+            data: { userId: self.userId },
           })
           .then((response) => {
             console.log(response);
@@ -335,12 +314,11 @@ export default {
         });
     },
     deleteComment(id, authorId, currentPostId) {
-      
       if (this.userId == authorId) {
         axios
           .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
             headers: { Authorization: `Bearer ${this.token}` },
-            data: { userId: self.userId},
+            data: { userId: self.userId },
           })
           .then((response) => {
             console.log(response);
@@ -351,9 +329,8 @@ export default {
           });
       }
     },
-     deleteCommentAdmin(id,currentPostId) {
-     
-      if (this.id==103)  {
+    deleteCommentAdmin(id, currentPostId) {
+      if (this.id == 103) {
         axios
           .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`)
           .then((response) => {
@@ -465,23 +442,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .btn {
   margin-left: 250px;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: black;
-    box-shadow:   10px 10px  grey; ;
-    
+  color: #fff;
+  background-color: black;
+  box-shadow: 10px 10px grey;
 }
 
-.border{
+.border {
   border-radius: 15px;
-  border: 1px solid grey!important;
-  box-shadow: 2px 1px 2px 1px black ;
-
+  border: 1px solid grey !important;
+  box-shadow: 2px 1px 2px 1px black;
 }
 
 .text-noPost {
@@ -556,7 +530,6 @@ export default {
   }
 }
 
-
 .publier {
   width: 100px;
 }
@@ -578,7 +551,7 @@ export default {
   font-size: 20px;
   margin-left: 10px;
   margin-right: 10px;
-  color : black;
+  color: black;
 }
 
 .posts:hover {
@@ -624,7 +597,6 @@ export default {
   font-size: 19px;
   color: black;
 }
-
 
 .comments {
   display: flex;
