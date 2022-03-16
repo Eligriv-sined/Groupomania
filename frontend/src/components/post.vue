@@ -145,6 +145,7 @@
                   class="delete"
                   src="../../image/times-solid.svg"
                   alt="supprimer"
+                  v-if="comment.authorId == userId || userId == 103"
                   @click="
                     deleteComment(
                       comment.idComment,
@@ -152,7 +153,7 @@
                       post.postId
                     )
                   "
-                  v-if="comment.authorId == userId || userId == 103"
+                  
                 />
               </div>
             </div>
@@ -279,22 +280,26 @@ export default {
     deletePost(postId, authorId) {
       if (this.userId == authorId) {
         axios
-          .delete(`http://localhost:3000/api/posts/${postId}`, )
+          .delete(`http://localhost:3000/api/posts/${postId}`,{
+            data: { userId: this.userId}
+          })
             
           .then((response) => {
             console.log(response);
-            self.getPost();
+            this.getPost();
           })
           .catch(function (error) {
             console.log(error);
           });
-      }else if (this.userId == 103){
+      } else if (this.userId == 103){
         axios
-          .delete(`http://localhost:3000/api/posts/${postId}`, )
-            
+        .delete(`http://localhost:3000/api/posts/${postId}`,{
+         
+          data :{userId : authorId }
+ })
           .then((response) => {
             console.log(response);
-            self.getPost();
+            this.getPost();
           })
           .catch(function (error) {
             console.log(error);
@@ -317,12 +322,13 @@ export default {
           console.log(error);
         });
     },
-    deleteComment( id , authorId, currentPostId ) {
-     console.log(this.userId);
-      if (this.userId == authorId  ) {
+   deleteComment(id, authorId, currentPostId) {
+      if (this.userId == authorId ) {
         axios
-          .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`
-          )
+          .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
+            
+            data: { userId: this.userId },
+          })
           .then((response) => {
             console.log(response);
             this.getPost();
@@ -330,11 +336,12 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
-      } 
-      else if (this.userId == 103){ 
-        axios
-          .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`
-          )
+      } else if (this.userId == 103 ){
+         axios
+          .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
+           
+            data: { userId: authorId },
+          })
           .then((response) => {
             console.log(response);
             this.getPost();
@@ -342,7 +349,6 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
-
       }
     },
    
