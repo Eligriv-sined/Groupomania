@@ -12,7 +12,7 @@ router.post("/login", userCtrl.connexion);
 router.put("/modify/:id", authTokenId, multer, userCtrl.modifPP);
 router.put("/modifyAccount/:id", authTokenId, userCtrl.modifAccount);
 router.put("/modifyPassword/:id", authTokenId, userCtrl.modifPassword);
-router.get("/", authTokenId, userCtrl.getOne);
+router.get("/", userCtrl.getOne);
 
 
 module.exports = router;

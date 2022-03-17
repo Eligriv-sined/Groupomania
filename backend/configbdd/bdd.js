@@ -19,7 +19,6 @@ module.exports = pool.promise( console.log("Connexion BDD"));
 
 
 
-
 pool.query(`SELECT * FROM user `,
 function(err,results,fields){
   console.log(results);

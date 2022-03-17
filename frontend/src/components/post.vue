@@ -5,25 +5,51 @@
         <div class="form">
           <form v-on:submit.prevent>
             <div>
-              <input type="text" class="form-control mb-2"  id="text" placeholder="Comment ça va aujourd'hui ?" aria-label="zone de texte"/>
+              <input 
+              type="text"
+              class="form-control mb-2"
+                id="titre"
+                placeholder="Titre de votre article"
+                aria-label="zone de titre"
+
+              /> 
+              <input
+                type="text"
+                class="form-control mb-2"
+                id="text"
+                placeholder="Comment ça va aujourd'hui ?"
+                aria-label="zone de texte"
+              />
             </div>
             <div class="justify-content-between">
-              <input @change="upload2" type="file" id="image" name="image" accept="image/png, image/jpeg" aria-label="choisir un fichier img" />
-              <button @click="addPost()" class="publier btn btn-primary" aria-label="boutons envoie">envoyé
+              <input
+                @change="upload2"
+                type="file"
+                id="image"
+                name="image"
+                accept="image/png, image/jpeg"
+                aria-label="choisir un fichier img"
+              />
+              <button
+                @click="addPost()"
+                class="publier btn btn-primary"
+                aria-label="boutons envoie"
+              >
+                envoyer
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <div v-if="first">
+    <div v-if="first" id ="test">
       <div
         v-for="post in posts"
         :key="post.postId"
         class="d-flex justify-content-center"
       >
         <div
-          class="bg-white border mt-2 mb-2 col-sm-12 col-md-10 col-lg-6 posts"
+          class="bg-white border mt-2 mb-2 col-sm-12 col-md-10 col-lg-6 posts article"
         >
           <div>
             <div
@@ -46,20 +72,23 @@
                 <div class="d-flex flex-column flex-wrap ml-2">
                   <span class="font-weight-bold nomUser"
                     >{{ post.prenom }} {{ post.nom }}</span
+                  > <span class="text-black-50"
+                    >Posté le {{ formatDate(post.date) }}</span
                   >
                 </div>
                 <img
                   class="deletePost"
                   src="../../image/times-solid.svg"
                   alt="supprimer"
-                  v-if="post.authorId == userId || userId == 103"
-                  @click="deletePost(post.postId, post.authorId)"
+                  
+                  @click="deletePost(post.postId, post.authorId )"
                 />
               </div>
             </div>
           </div>
           <div v-if="post.text != ' '">
-            <span class="text">{{ post.text }}</span>
+             <p class="titre">{{ post.titre }}</p>
+            <p class="text">{{ post.text }}</p>
           </div>
           <div v-if="post.imageUrl" class="mb-2">
             <img
@@ -145,15 +174,15 @@
                   class="delete"
                   src="../../image/times-solid.svg"
                   alt="supprimer"
-                  v-if="comment.authorId == userId || userId == 103"
+                   v-if="post.authorId == userId || (user && user.admin)"
                   @click="
                     deleteComment(
                       comment.idComment,
                       comment.authorId,
-                      post.postId
+                      post.postId,
+                      user.admin
                     )
                   "
-                  
                 />
               </div>
             </div>
@@ -187,7 +216,10 @@ export default {
   data() {
     return {
       first: null,
+      image: null,
+      userIdPage: this.$route.params.userId,
       user: null,
+      currentUser: null,
       likedPost: [],
       posts: null,
       postsRecive: null,
@@ -211,6 +243,13 @@ export default {
     };
   },
   methods: {
+     formatDate(input) {
+      var datePart = input.match(/\d+/g),
+        year = datePart[0].substring(2), 
+        month = datePart[1],
+        day = datePart[2];
+      return day + "/" + month + "/" + year;
+    },
     afficherComment(event) {
       let path;
       if (event.path[3].children[3].matches(".react")) {
@@ -232,16 +271,19 @@ export default {
         .split("; ")
         .find((row) => row.startsWith("user-token="))
         .split("=")[1];
-      this.text = document.querySelector("#text").value;
+    this.titre = document.querySelector("#titre").value;
+     this.text = document.querySelector("#text").value;
       const fd = new FormData();
       fd.append("userId", this.userId);
       if (this.text != "") {
+        fd.append("titre",this.titre);
         fd.append("text", this.text);
       }
       if (this.image) {
         fd.append("image", this.image, "image");
       }
-      if (this.text || this.image) {
+      
+      if (this.text || this.image || this.titre) {
         const self = this;
         axios
           .post("http://localhost:3000/api/posts", fd, {
@@ -253,6 +295,7 @@ export default {
           .then(function (response) {
             console.log(response);
             document.querySelector("#text").value = null;
+            document.querySelector("#titre").value = null;
             self.getPost();
           })
           .catch(function (error) {
@@ -277,7 +320,8 @@ export default {
           console.log(error);
         });
     },
-    deletePost(postId, authorId) {
+  
+ deletePost(postId, authorId) {
       if (this.userId == authorId) {
         axios
           .delete(`http://localhost:3000/api/posts/${postId}`,{
@@ -351,7 +395,8 @@ export default {
           });
       }
     },
-   
+    
+
     upload(event) {
       this.newComment = event.target.value;
     },
@@ -452,8 +497,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+
 .btn {
   margin-left: 250px;
+
+}
+
+#test{
+  padding-top: 3% ;
+}
+
+.posts{
+  white-space: pre-line;
+  width: 65%;
 }
 
 .btn-primary {
@@ -554,8 +611,28 @@ export default {
   border-radius: 20px;
   background-color: #f0f2f5;
   color: black;
+  
+}
+#titre{
+  
+  border-radius: 20px;
+  background-color: #f0f2f5;
+  
 }
 
+.titre {
+  color: black;
+  text-decoration: underline 1px solid black !important; 
+  font-size: x-large;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: block;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
 .nbr {
   font-weight: 300;
   font-size: 20px;
@@ -660,5 +737,8 @@ export default {
   .newPost {
     width: 100%;
   }
+  #test{
+  padding-top: 10% ;
+}
 }
 </style>

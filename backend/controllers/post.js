@@ -21,8 +21,10 @@ exports.getByauteur = (req, res, next) => {
 exports.create = (req, res, next) => {
     // DEFINI LES CHAMPS REMPLI
     const image = (req.file) ? `${req.protocol}://${req.get('host')}/images/post/${req.file.filename}` : "";
+    const titreSend = (req.body.titre) ? req.body.titre : " ";
     const textSend = (req.body.text) ? req.body.text : " ";
     const post = {
+        titre:titreSend , 
         text: textSend,
         imageUrl: image,
         like: 0,
@@ -30,8 +32,8 @@ exports.create = (req, res, next) => {
         authorId: req.body.userId,
     };
     //ENVOIE LA REQUETE AVEC MULTER ET LES VALEURS PAR DEFAUT
-    let sql = `INSERT INTO post (text, imageUrl, date, authorId) VALUES (?,?,?,?);`;
-    pool.execute(sql, [post.text, post.imageUrl, post.date, post.authorId], function (err, result) {
+    let sql = `INSERT INTO post (titre,text, imageUrl, date, authorId) VALUES (?,?,?,?,?);`;
+    pool.execute(sql, [post.titre, post.text, post.imageUrl, post.date, post.authorId], function (err, result) {
         if (err) throw err;
         res.status(201).json({ message: `Post ajouté` });
     })
