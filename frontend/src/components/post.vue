@@ -49,7 +49,7 @@
         class="d-flex justify-content-center"
       >
         <div
-          class="bg-white border mt-2 mb-2 col-sm-12 col-md-10 col-lg-6 posts article"
+          class="bg-white border mt-2 mb-2 col-sm-12 col-md-10 col-lg-6 posts"
         >
           <div>
             <div
@@ -67,12 +67,13 @@
                 <router-link
                   :to="{ name: 'user', params: { userId: post.authorId } }"
                 >
+                  
                 </router-link>
 
                 <div class="d-flex flex-column flex-wrap ml-2">
                   <span class="font-weight-bold nomUser"
                     >{{ post.prenom }} {{ post.nom }}</span
-                  > <span class="text-black-50"
+                  ><span class="text-black-50"
                     >Posté le {{ formatDate(post.date) }}</span
                   >
                 </div>
@@ -80,13 +81,13 @@
                   class="deletePost"
                   src="../../image/times-solid.svg"
                   alt="supprimer"
-                  
-                  @click="deletePost(post.postId, post.authorId )"
+                  v-if="post.authorId == userId || (user && user.admin)"
+                  @click="deletePost(post.postId, post.authorId)"
                 />
               </div>
             </div>
           </div>
-          <div v-if="post.text != ' '">
+           <div v-if="post.text != ' '">
              <p class="titre">{{ post.titre }}</p>
             <p class="text">{{ post.text }}</p>
           </div>
@@ -162,7 +163,7 @@
               <div class="pp" v-if="post.postId === comment.postId">
                 <router-link
                   :to="{ name: 'user', params: { userId: comment.authorId } }"
-                >
+                >               
                 </router-link>
               </div>
               <div v-if="post.postId === comment.postId" class="commentaire">
@@ -174,13 +175,12 @@
                   class="delete"
                   src="../../image/times-solid.svg"
                   alt="supprimer"
-                   v-if="post.authorId == userId || (user && user.admin)"
+                  v-if="comment.id == userId || (user && user.admin)"
                   @click="
                     deleteComment(
                       comment.idComment,
                       comment.authorId,
-                      post.postId,
-                      user.admin
+                      post.postId
                     )
                   "
                 />
@@ -196,7 +196,6 @@
               id="comment"
               aria-describedby="comment"
               placeholder="Ajoutez un commentaire ..."
-              aria-label="ajouter un commentaire"
             />
           </div>
         </div>
@@ -216,10 +215,7 @@ export default {
   data() {
     return {
       first: null,
-      image: null,
-      userIdPage: this.$route.params.userId,
       user: null,
-      currentUser: null,
       likedPost: [],
       posts: null,
       postsRecive: null,
@@ -243,9 +239,9 @@ export default {
     };
   },
   methods: {
-     formatDate(input) {
+    formatDate(input) {
       var datePart = input.match(/\d+/g),
-        year = datePart[0].substring(2), 
+        year = datePart[0].substring(2), // get only two digits
         month = datePart[1],
         day = datePart[2];
       return day + "/" + month + "/" + year;
@@ -286,7 +282,7 @@ export default {
       if (this.text || this.image || this.titre) {
         const self = this;
         axios
-          .post("http://localhost:3000/api/posts", fd, {
+          .post("http://localhost:3000/api/post", fd, {
             headers: {
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${this.token}`,
@@ -320,30 +316,17 @@ export default {
           console.log(error);
         });
     },
-  
- deletePost(postId, authorId) {
-      if (this.userId == authorId) {
+    deletePost(postId, authorId) {
+      const self = this;
+      if (this.userId == authorId || (self.user && self.user.admin)) {
         axios
-          .delete(`http://localhost:3000/api/posts/${postId}`,{
-            data: { userId: this.userId}
+          .delete(`http://localhost:3000/api/post/${postId}`, {
+            headers: { Authorization: `Bearer ${this.token}` },
+            data: { userId: self.userId, admin: self.user.admin },
           })
-            
           .then((response) => {
             console.log(response);
-            this.getPost();
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      } else if (this.userId == 103){
-        axios
-        .delete(`http://localhost:3000/api/posts/${postId}`,{
-         
-          data :{userId : authorId }
- })
-          .then((response) => {
-            console.log(response);
-            this.getPost();
+            self.getPost();
           })
           .catch(function (error) {
             console.log(error);
@@ -366,37 +349,23 @@ export default {
           console.log(error);
         });
     },
-   deleteComment(id, authorId, currentPostId) {
-      if (this.userId == authorId ) {
+    deleteComment(id, authorId, currentPostId) {
+      const self = this;
+      if (this.userId == authorId || (self.user && self.user.admin)) {
         axios
           .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
-            
-            data: { userId: this.userId },
+            headers: { Authorization: `Bearer ${this.token}` },
+            data: { userId: self.userId, admin: self.user.admin },
           })
           .then((response) => {
             console.log(response);
-            this.getPost();
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      } else if (this.userId == 103 ){
-         axios
-          .delete(`http://localhost:3000/api/comment/${id}/${currentPostId}`, {
-           
-            data: { userId: authorId },
-          })
-          .then((response) => {
-            console.log(response);
-            this.getPost();
+            self.getPost();
           })
           .catch(function (error) {
             console.log(error);
           });
       }
     },
-    
-
     upload(event) {
       this.newComment = event.target.value;
     },
@@ -443,7 +412,7 @@ export default {
       }
       const self = this;
       axios
-        .get("http://localhost:3000/api/posts", {
+        .get("http://localhost:3000/api/post", {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
@@ -486,6 +455,27 @@ export default {
             .find((row) => row.startsWith("user-token="))
             .split("=")[1]
         : null);
+    const self = this;
+    axios
+      .post(
+        "http://localhost:3000/api/user",
+        { userId: self.userId },
+        {
+          headers: {
+            Authorization: `Bearer ${self.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        self.user = response.data[0];
+      })
+      .catch(function (error) {
+        if (error.response && error.response.status === 400) {
+          document.cookie = "userId=";
+          document.cookie = "user-token=";
+          self.$router.push("/");
+        }
+      });
 
     this.getPost();
     this.liked();
@@ -495,7 +485,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 
 

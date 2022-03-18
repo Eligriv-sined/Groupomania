@@ -21,9 +21,8 @@ const routes = [
     path: '/user/:userId',
     name: 'user',
     component: () =>
-      import(/* webpackChunkName: "about" */ "../components/post.vue"),
+      import(/* webpackChunkName: "about" */ "../views/user.vue"),
   },
-  
   {
     path: '/settings',
     name: 'settings',

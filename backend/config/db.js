@@ -1,19 +1,17 @@
-
-const { log } = require('console');
+// get the client
 const mysql = require('mysql2');
 const dotenv = require("dotenv").config();
 
-
-const pool = mysql.createPool({  
+// Create the connection pool. The pool-specific settings are the defaults
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER, 
-  password: process.env.DB_PASS,
   database: 'groupomania',
+  password: process.env.DB_PASS
 });
 
-console.log(pool);
-
-module.exports = pool.promise( console.log("Connexion BDD"));
+ 
+module.exports = pool.promise( console.log("Connexion DB"));
 
 
 
@@ -36,5 +34,4 @@ function(err,results,fields){
   console.log(results);
  
 });
-
 

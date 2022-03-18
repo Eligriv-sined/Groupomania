@@ -1,4 +1,4 @@
-const { pool } = require('../configbdd/bdd');
+const { pool } = require('../config/db');
 
 exports.like = (req, res, next) => {
     // TOUT LES POST DU DERNIER AU PREMIER

@@ -1,12 +1,11 @@
-const { pool } = require('../configbdd/bdd');
+const { pool } = require('../config/db');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv").config();
 const fs = require("fs");
 
 
-
-exports.suprimer = (req, res, next) => {
+exports.delete = (req, res, next) => {
     if (req.body.password) {
         let sql = `SELECT * FROM user WHERE id=?`;
         pool.execute(sql, [req.params.id], function (err, result) {
@@ -33,7 +32,7 @@ exports.suprimer = (req, res, next) => {
     }
 }
 
-exports.inscription = (req, res, next) => {
+exports.signup = (req, res, next) => {
     let sql = `SELECT * FROM user WHERE email=?`;
     pool.execute(sql, [req.body.email], function (err, result) {
         let user = result[0];
@@ -62,7 +61,7 @@ exports.inscription = (req, res, next) => {
 
 };
 
-exports.connexion = (req, res, next) => {
+exports.login = (req, res, next) => {
     let sql = `SELECT * FROM user WHERE email=?`;
     pool.execute(sql, [req.body.email], function (err, result) {
         let user = result[0];
@@ -94,9 +93,15 @@ exports.getOne = (req, res, next) => {
     });
 }
 
+exports.getAs = (req, res, next) => {
+    let sql = `SELECT * FROM user WHERE nom LIKE '%${req.body.nom}%' OR prenom LIKE '%${req.body.nom}%' LIMIT 12;`;
+    pool.execute(sql, [req.body.nom], function (err, result) {
+        if (err) res.status(400).json({ err });
+        res.status(200).json(result)
+    });
+}
 
-
-exports.modifPassword = (req, res, next) => {
+exports.modifyPassword = (req, res, next) => {
     if (req.body.password) {
         let sql = `SELECT * FROM user WHERE id=?`;
         pool.execute(sql, [req.params.id], function (err, result) {
@@ -151,7 +156,7 @@ exports.modifAccount = (req, res, next) => {
     res.status(200).json({ message: "Information user update" });
 }
 
-exports.modifPP = (req, res, next) => {
+exports.modifyPP = (req, res, next) => {
     if (req.file) {
         let sql = `SELECT * FROM user WHERE id = ?`;
         pool.execute(sql, [req.params.id], function (err, result) {
@@ -180,11 +185,3 @@ exports.modifPP = (req, res, next) => {
         });
     }
 };
-
-exports.getAll = (req,res,next) => {
-    let sql = `SELECT * FROM user`;
-    pool.query(sql, function (err, result) {
-        if (err) res.status(400).json({ err });
-        res.status(200).json(result)
-    });
-}

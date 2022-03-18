@@ -1,4 +1,4 @@
-const { pool } = require('../configbdd/bdd');
+const { pool } = require('../config/db');
 
 exports.create = (req, res, next) => {
     // DEFINI LES CHAMPS REMPLI
@@ -27,7 +27,7 @@ exports.getAll = (req, res, next) => {
     });
 }
 
-exports.suprimer = (req, res, next) => {
+exports.delete = (req, res, next) => {
     let sql3 = `SELECT * from comment WHERE idComment=?`;
     pool.execute(sql3, [req.params.commentId], function (err, result) {
         if (result[0].authorId == req.body.userId || req.body.admin == true) {

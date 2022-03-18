@@ -1,4 +1,4 @@
-const { pool } = require('../configbdd/bdd');
+const { pool } = require('../config/db');
 const fs = require("fs");
 
 exports.getAll = (req, res, next) => {
@@ -10,14 +10,13 @@ exports.getAll = (req, res, next) => {
     });
 }
 
-exports.getByauteur = (req, res, next) => {
+exports.getByAuthor = (req, res, next) => {
     let sql = `SELECT * FROM post JOIN user WHERE user.id=authorId AND authorId=? ORDER BY date DESC;`;
     pool.execute(sql, [req.body.id], function (err, result) {
         if (err) res.status(400).json({ err });
         res.status(200).json(result)
     });
 }
-
 exports.create = (req, res, next) => {
     // DEFINI LES CHAMPS REMPLI
     const image = (req.file) ? `${req.protocol}://${req.get('host')}/images/post/${req.file.filename}` : "";
@@ -39,7 +38,8 @@ exports.create = (req, res, next) => {
     })
 };
 
-exports.suprimer = (req, res, next) => {
+
+exports.delete = (req, res, next) => {
     let sql = `SELECT * FROM post WHERE postId = ?`;
     pool.execute(sql, [req.params.id], function (err, result) {
         if (err) res.status(400).json({ err });
@@ -68,7 +68,7 @@ exports.suprimer = (req, res, next) => {
     });
 };
 
-exports.modif = (req, res, next) => {
+exports.modify = (req, res, next) => {
     if (req.file) {
         let sql = `SELECT * FROM post WHERE id = ?`;
         pool.execute(sql, [req.params.id], function (err, result) {
