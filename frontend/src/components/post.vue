@@ -17,7 +17,7 @@
                 type="text"
                 class="form-control mb-2"
                 id="text"
-                placeholder="Comment ça va aujourd'hui ?"
+                placeholder="Article"
                 aria-label="zone de texte"
               />
             </div>
