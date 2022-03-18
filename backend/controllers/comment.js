@@ -42,7 +42,7 @@ exports.delete = (req, res, next) => {
                 });
             })
         } else {
-            res.status(400).json({ message : "Bien essayé petit malin!" });   
+            res.status(400).json({ message : "Bien essayé" });   
         }
     });
 

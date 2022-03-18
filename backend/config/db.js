@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 });
 
  
-module.exports = pool.promise( console.log("Connexion DB"));
+module.exports = pool.promise( console.log("Connexion BDD"));
 
 
 
