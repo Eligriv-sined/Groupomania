@@ -1,24 +1,20 @@
-# frontend
 
 ## Project setup
 ```
-npm install
-```
+cd backend => npm in,stall 
+cd frontend => npm install 
 
-### Compiles and hot-reloads for development
 ```
-npm run serve
-```
+## Project lunch
 
-### Compiles and minifies for production
 ```
-npm run build
-```
+cd backend => nodemon server
+cd frontend => npm run server 
 
-### Lints and fixes files
 ```
-npm run lint
-```
+## Project connect Data Base
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+fichier .env , contiens toute les données a la bonne connection. 
+Fichier SQL groupomania inclus dans l'archive a installer pour recuperer la BDD. 
+```
