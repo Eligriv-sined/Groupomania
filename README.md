@@ -10,8 +10,8 @@ cd frontend => npm install
 
 ```
 cd backend => nodemon server
-cd frontend => npm run server 
-créer dossier images puis dossier post dans images au sein,s du backend
+cd frontend => npm run serve
+créer dossier images puis dossier post dans images au seins du backend
 ```
 ## Project connect Data Base
 
