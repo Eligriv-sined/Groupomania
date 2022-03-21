@@ -6,7 +6,7 @@ cd backend => npm install
 cd frontend => npm install 
 
 ```
-## Project lunch
+## Project launch
 
 ```
 cd backend => nodemon server
